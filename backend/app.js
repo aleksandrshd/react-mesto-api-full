@@ -9,7 +9,7 @@ const { apiLimiter } = require('./utils/apiLimiter');
 const routes = require('./routes');
 const errorsHandler = require('./middlewares/errorsHandler');
 
-const PORT = 3001;
+const PORT = 3000;
 
 const app = express();
 
