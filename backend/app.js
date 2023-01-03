@@ -6,12 +6,19 @@ const { errors } = require('celebrate');
 const cors = require('cors');
 const { apiLimiter } = require('./utils/apiLimiter');
 
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes');
 const errorsHandler = require('./middlewares/errorsHandler');
 
 const PORT = 3000;
 
 const app = express();
+
+require('dotenv').config();
+
+console.log(process.env.NODE_ENV);
+
+console.log(process.env.JWT_SECRET);
 
 app.use(cors());
 
@@ -21,7 +28,11 @@ app.use(apiLimiter);
 
 app.use(bodyParser.json());
 
+app.use(requestLogger);
+
 app.use(routes);
+
+app.use(errorLogger);
 
 app.use(errors());
 
