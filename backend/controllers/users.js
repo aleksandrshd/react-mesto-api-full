@@ -9,6 +9,10 @@ const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const { NODE_ENV, JWT_SECRET } = process.env;
 
+console.log('NODE_ENV users.js', NODE_ENV);
+
+console.log('JWT_SECRET users.js', JWT_SECRET);
+
 const getUsers = async (req, res, next) => {
   try {
     const users = await User.find({});

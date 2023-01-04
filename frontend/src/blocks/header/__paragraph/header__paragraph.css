@@ -1,0 +1,17 @@
+.header__paragraph {
+    color: white;
+    font-size: 18px;
+    margin-right: 17px;
+    margin-top: 8px;
+}
+
+@media screen and (max-width: 568px) {
+    .header__paragraph {
+        max-width: 180px;
+        font-size: 14px;
+        margin-top: 4px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}

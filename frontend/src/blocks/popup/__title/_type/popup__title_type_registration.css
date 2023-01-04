@@ -1,0 +1,11 @@
+.popup__title_type_registration {
+    max-width: 300px;
+    text-align: center;
+    margin: 0;
+}
+
+@media screen and (max-width: 568px) {
+    .popup__title_type_registration {
+        max-width: 250px;
+    }
+}

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -13,8 +14,6 @@ const errorsHandler = require('./middlewares/errorsHandler');
 const PORT = 3000;
 
 const app = express();
-
-require('dotenv').config();
 
 console.log(process.env.NODE_ENV);
 
