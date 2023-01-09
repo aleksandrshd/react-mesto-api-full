@@ -6,3 +6,7 @@
 - IP 51.250.1.13
 - Frontend https://mesto.aleksandrs.nomoredomains.club
 - Backend https://api.mesto.aleksandrs.nomoredomains.club
+
+Ссылка на репозиторий проекта на GitHub:
+
+- https://github.com/aleksandrshd/react-mesto-api-full

@@ -10,14 +10,13 @@ const { apiLimiter } = require('./utils/apiLimiter');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const routes = require('./routes');
 const errorsHandler = require('./middlewares/errorsHandler');
+const { PORT, MONGO_IP, MONGO_PORT } = require('./utils/config');
 
-const PORT = 3000;
+console.log('MONGO_IP:', MONGO_IP);
+
+console.log('MONGO_PORT:', MONGO_PORT);
 
 const app = express();
-
-console.log(process.env.NODE_ENV);
-
-console.log(process.env.JWT_SECRET);
 
 app.use(cors());
 
@@ -37,7 +36,7 @@ app.use(errors());
 
 app.use(errorsHandler);
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
+mongoose.connect(`mongodb://${MONGO_IP}:${MONGO_PORT}/mestodb`, {
   useNewUrlParser: true,
 }, () => {
   app.listen(PORT, () => {

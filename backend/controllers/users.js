@@ -7,11 +7,7 @@ const BadRequestError = require('../errors/BadRequestError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-const { NODE_ENV, JWT_SECRET } = process.env;
-
-console.log('NODE_ENV users.js', NODE_ENV);
-
-console.log('JWT_SECRET users.js', JWT_SECRET);
+const { NODE_ENV, JWT_SECRET } = require('../utils/config');
 
 const getUsers = async (req, res, next) => {
   try {
@@ -67,10 +63,10 @@ const getUser = async (req, res, next) => {
   }
 };
 
-const updateUserProfile = async (req, res, next) => {
+const updateUser = async (req, res, next) => {
   try {
     const id = req.user._id;
-    const user = await User.findByIdAndUpdate(id, { name: req.body.name, about: req.body.about }, {
+    const user = await User.findByIdAndUpdate(id, req.body, {
       new: true,
       runValidators: true,
     });
@@ -84,28 +80,6 @@ const updateUserProfile = async (req, res, next) => {
     if (err.name === 'ValidationError') {
       const errors = Object.values(err.errors).map((error) => error.message);
       return next(new BadRequestError(`Переданы некорректные данные при обновлении профиля. ${errors.join(', ')}`));
-    }
-    return next(err);
-  }
-};
-
-const updateUserAvatar = async (req, res, next) => {
-  try {
-    const id = req.user._id;
-    const user = await User.findByIdAndUpdate(id, { avatar: req.body.avatar }, {
-      new: true,
-      runValidators: true,
-    });
-
-    if (!user) {
-      return next(new NotFoundError('Пользователь не найден!'));
-    }
-
-    return res.json(user);
-  } catch (err) {
-    if (err.name === 'ValidationError') {
-      const errors = Object.values(err.errors).map((error) => error.message);
-      return next(new BadRequestError(`Переданы некорректные данные при обновлении аватара. ${errors.join(', ')}`));
     }
     return next(err);
   }
@@ -158,8 +132,7 @@ module.exports = {
   getUsers,
   createUser,
   getUser,
-  updateUserProfile,
-  updateUserAvatar,
+  updateUser,
   login,
   getCurrentUserInfo,
 };

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 
 const {
-  getUsers, getUser, updateUserProfile, updateUserAvatar, getCurrentUserInfo,
+  getUsers, getUser, updateUser, getCurrentUserInfo,
 } = require('../controllers/users');
 const { urlRegEx } = require('../utils/constants');
 
@@ -21,12 +21,12 @@ router.patch('/me', celebrate({
     name: Joi.string().required().min(2).max(30),
     about: Joi.string().required().min(2).max(30),
   }),
-}), updateUserProfile);
+}), updateUser);
 
 router.patch('/me/avatar', celebrate({
   body: Joi.object().keys({
     avatar: Joi.string().regex(urlRegEx).required(),
   }),
-}), updateUserAvatar);
+}), updateUser);
 
 module.exports = router;
