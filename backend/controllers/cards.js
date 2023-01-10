@@ -50,12 +50,12 @@ const deleteCard = async (req, res, next) => {
   }
 };
 
-const likeCard = async (req, res, next) => {
+const handleCardLike = (action) => async (req, res, next) => {
   try {
     const { id } = req.params;
     const query = await Card.findByIdAndUpdate(
       id,
-      { $addToSet: { likes: req.user._id } },
+      { [action]: { likes: req.user._id } },
       { new: true },
     );
 
@@ -66,34 +66,12 @@ const likeCard = async (req, res, next) => {
     return res.json(updatedCard);
   } catch (err) {
     if (err.name === 'CastError') {
-      return next(new BadRequestError('Переданы некорректные данные для постановки лайка!'));
-    }
-    return next(err);
-  }
-};
-
-const dislikeCard = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const query = await Card.findByIdAndUpdate(
-      id,
-      { $pull: { likes: req.user._id } },
-      { new: true },
-    );
-
-    if (!query) {
-      return next(new NotFoundError('Карточка c указанным id не найдена!'));
-    }
-    const updatedCard = await Card.findById(id);
-    return res.json(updatedCard);
-  } catch (err) {
-    if (err.name === 'CastError') {
-      return next(new BadRequestError('Переданы некорректные данные для снятия лайка!'));
+      return next(new BadRequestError('Переданы некорректные данные для обработки лайка!'));
     }
     return next(err);
   }
 };
 
 module.exports = {
-  getCards, createCard, deleteCard, likeCard, dislikeCard,
+  getCards, createCard, deleteCard, handleCardLike,
 };

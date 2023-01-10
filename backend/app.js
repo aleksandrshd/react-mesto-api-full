@@ -12,10 +12,6 @@ const routes = require('./routes');
 const errorsHandler = require('./middlewares/errorsHandler');
 const { PORT, MONGO_IP, MONGO_PORT } = require('./utils/config');
 
-console.log('MONGO_IP:', MONGO_IP);
-
-console.log('MONGO_PORT:', MONGO_PORT);
-
 const app = express();
 
 app.use(cors());

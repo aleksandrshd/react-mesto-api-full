@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { celebrate, Joi } = require('celebrate');
 
 const {
-  getCards, createCard, deleteCard, likeCard, dislikeCard,
+  getCards, createCard, deleteCard, handleCardLike,
 } = require('../controllers/cards');
 const { urlRegEx } = require('../utils/constants');
 
@@ -25,12 +25,12 @@ router.put('/:id/likes', celebrate({
   params: Joi.object().keys({
     id: Joi.string().alphanum().hex().length(24),
   }),
-}), likeCard);
+}), handleCardLike('$addToSet'));
 
 router.delete('/:id/likes', celebrate({
   params: Joi.object().keys({
     id: Joi.string().alphanum().hex().length(24),
   }),
-}), dislikeCard);
+}), handleCardLike('$pull'));
 
 module.exports = router;
